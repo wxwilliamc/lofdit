@@ -17,7 +17,7 @@ const UserAuthForm = () => {
             await signIn('google')
         } catch (error) {
             // toast notification
-            toast.error("Try other SignIn Method or Come back later...")
+            toast.error("Try again later...")
         } finally {
             setIsLoading(false)
         }
