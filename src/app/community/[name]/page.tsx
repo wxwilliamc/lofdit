@@ -1,5 +1,4 @@
 import ScaledPostCreate from '@/components/ScaledPostCreate';
-import UserAvatar from '@/components/UserAvatar';
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from '@/config';
 import { getAuthSession } from '@/lib/auth-options'
 import { db } from '@/lib/db';
@@ -28,19 +27,6 @@ const page = async ({ params }: { params: { name: string }}) => {
     })
 
     if(!lofdit) return notFound() // throw error 404
-
-    const isCreator = await db.lofdit.findFirst({
-        where: {
-            name
-        },
-        include: {
-            Creator: {
-                select: {
-                    image: true
-                }
-            }
-        }
-    })
 
   return (
     <>
