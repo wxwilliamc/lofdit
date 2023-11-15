@@ -1,3 +1,4 @@
+import Posts from '@/components/Posts';
 import ScaledPostCreate from '@/components/ScaledPostCreate';
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from '@/config';
 import { getAuthSession } from '@/lib/auth-options'
@@ -33,6 +34,7 @@ const page = async ({ params }: { params: { name: string }}) => {
         <ScaledPostCreate session={session}/>
 
         {/* Todo: Show posts in user feed */}
+        <Posts initialPosts={lofdit.posts} lofditName={lofdit.name}/>
     </>
   )
 }
