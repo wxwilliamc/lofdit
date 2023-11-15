@@ -1,7 +1,7 @@
 "use client"
 
 import { ExtendedPost } from '@/types/db'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useIntersection } from '@mantine/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from '@/config'
@@ -26,7 +26,7 @@ const Posts = ({ initialPosts, lofditName }: PostsProps) => {
 
     // Infinite Scrolling
     const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(['infinite-query'], async ({ pageParam = 1 }) => {
-        const query = `/api/posts?limit=${INFINITE_SCROLLING_PAGINATION_RESULTS}$page=${pageParam}` + (!!lofditName ? `&lofditName=${lofditName}` : '')
+        const query = `/api/posts?limit=${INFINITE_SCROLLING_PAGINATION_RESULTS}&page=${pageParam}` + (!!lofditName ? `&lofditName=${lofditName}` : '')
 
         const { data } = await axios.get(query)
         return data as ExtendedPost[]
@@ -41,10 +41,16 @@ const Posts = ({ initialPosts, lofditName }: PostsProps) => {
 
     const posts = data?.pages.flatMap((page) => page) ?? initialPosts
 
+    useEffect(() => {
+        if(entry?.isIntersecting){
+            fetchNextPage();
+        }
+    }, [entry, fetchNextPage])
+
   return (
     <ul className='flex flex-col col-span-2 space-y-6'>
         {posts.map((post, index) => {
-            const votesStatus = post.votes.reduce((acc, vote) => {
+            const votesTotal = post.votes.reduce((acc, vote) => {
                 if(vote.type === "UP") return acc + 1
                 if(vote.type === "DOWN") return acc - 1
                 return acc
@@ -55,11 +61,11 @@ const Posts = ({ initialPosts, lofditName }: PostsProps) => {
             if(index === posts.length - 1){
                 return (
                     <li key={post.id} ref={ref}>
-                        <Post totalComments={post.comments.length} lofditName={post.lofdit.name} post={post}/>
+                        <Post totalComments={post.comments.length} lofditName={post.lofdit.name} post={post} currentVote={currentVote} votesTotal={votesTotal}/>
                     </li>
                 )
             } else {
-                return <Post totalComments={post.comments.length} lofditName={post.lofdit.name} post={post} key={post.id}/>
+                return <Post totalComments={post.comments.length} lofditName={post.lofdit.name} post={post} key={post.id} currentVote={currentVote} votesTotal={votesTotal}/>
             }
         })}
     </ul>
