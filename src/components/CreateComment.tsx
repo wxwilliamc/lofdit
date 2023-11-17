@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { Label } from './ui/label'
-import { Textarea } from './ui/textarea'
+import { Textarea } from './ui/Textarea'
 import { Button } from './ui/Button'
 import { useMutation } from '@tanstack/react-query'
 import { CommentSchemaType } from '@/lib/validation/comment-schema'

@@ -3,6 +3,7 @@ import React from 'react'
 import { Button } from './ui/Button'
 import { getAuthSession } from '@/lib/auth-options'
 import UserAccountNav from './UserAccountNav'
+import Search from './Search'
 
 const Navbar = async () => {
 
@@ -18,7 +19,8 @@ const Navbar = async () => {
                 </span>
             </Link>
 
-            {/* Search - Apply in the end*/}
+            {/* Search */}
+            <Search />
 
             {/* Auth */}
             {session?.user && (

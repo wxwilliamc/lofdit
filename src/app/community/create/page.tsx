@@ -1,8 +1,8 @@
 "use client"
 
 import React, { useState } from 'react'
-import { Separator } from '@/components/ui/separator'
-import { Input } from '@/components/ui/input'
+import { Separator } from '@/components/ui/Separator'
+import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { useRouter } from 'next/navigation'
 import { ChevronLeftIcon } from 'lucide-react'
