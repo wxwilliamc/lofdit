@@ -50,13 +50,13 @@ const Posts = ({ initialPosts, lofditName }: PostsProps) => {
   return (
     <ul className='flex flex-col col-span-2 space-y-6'>
         {posts.map((post, index) => {
-            const votesTotal = post.votes.reduce((acc, vote) => {
+            const votesTotal = post.votes.reduce((acc: number, vote: { type: string }) => {
                 if(vote.type === "UP") return acc + 1
                 if(vote.type === "DOWN") return acc - 1
                 return acc
             }, 0)
 
-            const currentVote = post.votes.find((vote) => vote.userId === session?.user.id)
+            const currentVote = post.votes.find((vote: { userId: string | undefined }) => vote.userId === session?.user.id)
 
             if(index === posts.length - 1){
                 return (
