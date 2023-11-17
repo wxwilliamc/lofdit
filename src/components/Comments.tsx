@@ -52,6 +52,24 @@ const Comments = async ({ postId }: CommentsProps) => {
                         <div className='mb-2'>
                             <PostComment comment={topLvlComment} votesTotal={topLvlCommentVotesTotal} currentVote={topLvlCommentVote} postId={postId}/>
                         </div>
+
+                        {/* Render Replies */}
+                        {topLvlComment.replies.sort((a, b) => b.votes.length - a.votes.length).map((reply) => {
+
+                            const replyCommentVotesTotal = reply.votes.reduce((acc, vote) => {
+                                if(vote.type === 'UP') return acc + 1
+                                if(vote.type === 'DOWN') return acc - 1
+                                return acc
+                            }, 0)
+
+                            const replyCommentVote = reply.votes.find((vote) => vote.userId === session?.user.id)
+
+                            return (
+                                <div key={reply.id} className='ml-2 py-2 pl-4 border-l-2 border-zinc-200'>
+                                    <PostComment comment={reply} votesTotal={replyCommentVotesTotal} currentVote={replyCommentVote} postId={postId}/>
+                                </div>
+                            )
+                        })}
                     </div>
                 )
             })}

@@ -1,12 +1,20 @@
 "use client"
 
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import UserAvatar from './UserAvatar'
 import { Comment, CommentVote, User } from '@prisma/client'
 import { formatTimeToNow } from '@/lib/utils'
 import CommentVotes from './CommentVotes'
 import { Button } from './ui/Button'
 import { MessageSquare } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import { Label } from './ui/label'
+import { Textarea } from './ui/textarea'
+import { useMutation } from '@tanstack/react-query'
+import { CommentSchemaType } from '@/lib/validation/comment-schema'
+import axios, { AxiosError } from 'axios'
+import toast from 'react-hot-toast'
 
 type ExtendedComment = Comment & {
     votes: CommentVote[],
@@ -23,6 +31,31 @@ interface PostCommentProps {
 const PostComment = ({ comment, votesTotal, currentVote, postId }: PostCommentProps) => {
 
     const commentRef = useRef<HTMLDivElement>(null)
+    const router = useRouter();
+    const { data: session } = useSession();
+    const [isReplying, setIsReplying] = useState(false)
+    const [input, setInput] = useState("")
+
+  const { mutate: replyComment, isLoading } = useMutation({
+    mutationFn: async ({ postId, text, replyToId }: CommentSchemaType) => {
+      const values: CommentSchemaType = {
+        postId,
+        text,
+        replyToId,
+      }
+
+      const { data } = await axios.patch(`/api/lofdit/post/comment`, values)
+      return data
+    },
+    onError: () => {
+      toast.error("Something went wrong")
+    },
+    onSuccess: () => {
+      router.refresh();
+      setInput('');
+      setIsReplying(false);
+    }
+  })
 
   return (
     <div className='flex flex-col' ref={commentRef}>
@@ -47,13 +80,38 @@ const PostComment = ({ comment, votesTotal, currentVote, postId }: PostCommentPr
             {comment.text}
         </p>
 
-        <div className='flex gap-2 items-center'>
+        <div className='flex gap-2 items-center flex-wrap'>
             <CommentVotes commentId={comment.id} initialVotesTotal={votesTotal} initialVote={currentVote}/>
 
-            <Button variant='ghost' size='xs'>
+            <Button variant='ghost' size='xs' onClick={() => {
+                if(!session) router.push('/sign-in')
+                setIsReplying(true)
+            }}>
                 <MessageSquare className='w-4 h-4 mr-1.5'/>
                 Reply
             </Button>
+
+            {isReplying ? <>
+                <div className='grid w-full gap-1.5'>
+                    <Label htmlFor='comment'>
+                        Your Reply
+                    </Label>
+
+                    <div className='mt-2'>
+                        <Textarea id='comment' value={input} onChange={(e) => setInput(e.target.value)} rows={1} placeholder='Share your thoughts here'/>
+                    
+                        <div className='mt-2 flex justify-end gap-2'>
+                            <Button tabIndex={-1} variant='subtle' onClick={() => setIsReplying(false)}>
+                                Cancel
+                            </Button>
+
+                            <Button onClick={() => replyComment({ postId, text: input, replyToId: comment.replyToId ?? comment.id})} isLoading={isLoading} disabled={input.length === 0}>
+                                Reply
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </> : <></>}
         </div>
     </div>
   )

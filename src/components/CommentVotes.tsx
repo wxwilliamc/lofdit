@@ -11,6 +11,7 @@ import { PostVoteCommentSchemaType, PostVoteSchemaType } from '@/lib/validation/
 import axios, { AxiosError } from 'axios'
 import toast from 'react-hot-toast'
 import { Button } from './ui/Button'
+import { useRouter } from 'next/navigation'
 
 interface CommentVotesProps {
   commentId: string
@@ -48,7 +49,7 @@ const CommentVotes = ({ commentId, initialVotesTotal, initialVote }: CommentVote
 
       return toast.error("Something went wrong. Try again.")
     },
-    onMutate: (type) => {
+    onMutate: (type: VoteType) => {
       if(currentVote?.type === type){
         // User is voting the same way again, so remove their vote
         setCurrentVote(undefined)
@@ -66,7 +67,7 @@ const CommentVotes = ({ commentId, initialVotesTotal, initialVote }: CommentVote
           }
         }
       }
-    }
+    },
   })
   
   return (

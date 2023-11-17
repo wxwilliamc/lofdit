@@ -126,7 +126,7 @@ model Vote {
 }
 
 model CommentVote {
-  id        String   @id @map("_id")
+  id        String   @id @map("_id") @default(cuid())
   user      User     @relation(fields: [userId], references: [id])
   userId    String
   comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)

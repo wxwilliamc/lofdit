@@ -57,7 +57,7 @@ const CreateComment = ({ postId, replyToId }: CreateCommentProps ) => {
       
         <div className='mt-2 flex justify-end'>
           <Button onClick={() => createComment({ postId, text: input, replyToId})} isLoading={isLoading} disabled={input.length === 0}>
-            Post
+            Share
           </Button>
         </div>
       </div>
