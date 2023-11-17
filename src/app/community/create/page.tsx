@@ -1,8 +1,7 @@
 "use client"
 
 import React, { useState } from 'react'
-import { Separator } from '@/components/ui/Separator'
-import { Input } from '@/components/ui/Input'
+
 import { Button } from '@/components/ui/Button'
 import { useRouter } from 'next/navigation'
 import { ChevronLeftIcon } from 'lucide-react'
@@ -10,6 +9,8 @@ import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { CommunityNameSchemaType } from '@/lib/validation/schema'
 import toast from 'react-hot-toast'
+import { Separator } from '@/components/ui/Separator'
+import { Input } from '@/components/ui/Input'
 
 const CreateCommunityPage = () => {
     const [input, setInput] = useState("");

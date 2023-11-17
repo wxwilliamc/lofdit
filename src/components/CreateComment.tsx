@@ -1,14 +1,15 @@
 "use client"
 
 import React, { useState } from 'react'
-import { Label } from './ui/label'
-import { Textarea } from './ui/Textarea'
+import { Label } from './ui/Label'
+
 import { Button } from './ui/Button'
 import { useMutation } from '@tanstack/react-query'
 import { CommentSchemaType } from '@/lib/validation/comment-schema'
 import axios, { AxiosError } from 'axios'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { Textarea } from './ui/Textarea'
 
 interface CreateCommentProps {
   postId: string

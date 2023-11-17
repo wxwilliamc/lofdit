@@ -49,16 +49,12 @@ const Search = () => {
                     <CommandGroup heading="Communities">
                         {searchResults?.map((lofdit) => (
                             <CommandItem 
-                                onSelect={(result) => {
-                                    router.push(`/community/${result}`)
-                                    router.refresh()
-                                }}
                                 key={lofdit.id}
                                 value={lofdit.name}
                             >
                                 <Users className='mr-2 h-4 w-4'/>
                                 <a href={`/community/${lofdit.name}`}>
-                                    /community/{lofdit.name}
+                                    community/{lofdit.name}
                                 </a>
                             </CommandItem>
                         ))}

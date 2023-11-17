@@ -9,12 +9,14 @@ import { Button } from './ui/Button'
 import { MessageSquare } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { Label } from './ui/label'
-import { Textarea } from './ui/Textarea'
+
+
 import { useMutation } from '@tanstack/react-query'
 import { CommentSchemaType } from '@/lib/validation/comment-schema'
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import toast from 'react-hot-toast'
+import { Label } from './ui/Label'
+import { Textarea } from './ui/Textarea'
 
 type ExtendedComment = Comment & {
     votes: CommentVote[],
