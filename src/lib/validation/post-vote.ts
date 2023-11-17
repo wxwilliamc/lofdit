@@ -8,7 +8,7 @@ export const PostVoteSchema = z.object({
 export type PostVoteSchemaType = z.infer<typeof PostVoteSchema>
 
 export const PostVoteCommentSchema = z.object({
-    postId: z.string(),
+    commentId: z.string(),
     voteType: z.enum(['UP', 'DOWN']),
 })
 
