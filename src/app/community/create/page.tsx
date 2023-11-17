@@ -9,8 +9,9 @@ import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { CommunityNameSchemaType } from '@/lib/validation/schema'
 import toast from 'react-hot-toast'
+
+import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/Separator'
-import { Input } from '@/components/ui/Input'
 
 const CreateCommunityPage = () => {
     const [input, setInput] = useState("");

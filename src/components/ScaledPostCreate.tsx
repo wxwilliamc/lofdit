@@ -6,7 +6,7 @@ import UserAvatar from "./UserAvatar";
 
 import { Button } from "./ui/Button";
 import { ImageIcon, Link2 } from "lucide-react";
-import { Input } from "./ui/Input";
+import { Input } from "./ui/input";
 
 interface ScaledPostCreateProps {
     session: Session | null

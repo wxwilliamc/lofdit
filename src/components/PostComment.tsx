@@ -15,8 +15,8 @@ import { useMutation } from '@tanstack/react-query'
 import { CommentSchemaType } from '@/lib/validation/comment-schema'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import { Label } from './ui/Label'
-import { Textarea } from './ui/Textarea'
+import { Label } from './ui/label'
+import { Textarea } from './ui/textarea'
 
 type ExtendedComment = Comment & {
     votes: CommentVote[],
