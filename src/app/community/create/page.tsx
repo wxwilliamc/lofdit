@@ -11,7 +11,7 @@ import { CommunityNameSchemaType } from '@/lib/validation/schema'
 import toast from 'react-hot-toast'
 
 import { Input } from '@/components/ui/input'
-import { Separator } from '@/components/ui/Separator'
+import { Separator } from '@/components/ui/separator'
 
 const CreateCommunityPage = () => {
     const [input, setInput] = useState("");

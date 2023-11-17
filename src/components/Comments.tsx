@@ -1,7 +1,7 @@
 import { getAuthSession } from '@/lib/auth-options'
 import { db } from '@/lib/db';
 import React from 'react'
-import { Separator } from './ui/Separator';
+import { Separator } from './ui/separator';
 import PostComment from './PostComment';
 import CreateComment from './CreateComment';
 
